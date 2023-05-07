@@ -2,5 +2,5 @@
 
 public interface ISorter
 {
-    int[] Sort(int[] array);
+    void Sort(int[] array);
 }
