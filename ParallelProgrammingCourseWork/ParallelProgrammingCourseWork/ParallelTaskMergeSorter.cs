@@ -17,10 +17,10 @@ public class ParallelTaskMergeSorter : ISorter
         ThreadPool.GetMaxThreads(out _, out var IOMax);
         ThreadPool.SetMaxThreads(_workersNumber, IOMax);
 
-        ParallelTaskMergeSort(array, 0, array.Length - 1);
+        ParallelTaskMergeSort(array, 0, array.Length - 1).Wait();
     }
     
-    private static void ParallelTaskMergeSort(int[] array, int leftIndex, int rightIndex)
+    private static async Task ParallelTaskMergeSort(int[] array, int leftIndex, int rightIndex)
     {
         if (leftIndex >= rightIndex) return;
         
@@ -50,7 +50,7 @@ public class ParallelTaskMergeSorter : ISorter
             
         });
 
-        Task.WaitAll(task1, task2);
+        await Task.WhenAll(task1, task2);
 
         SequentialMergeSorter.Merge(array, leftIndex, middlePoint, rightIndex);
     }
