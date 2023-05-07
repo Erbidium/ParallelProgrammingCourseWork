@@ -11,9 +11,12 @@ public class ParallelTaskMergeSorter : ISorter
     
     public void Sort(int[] array)
     {
-        ThreadPool.SetMinThreads(_workersNumber, 0);
-        ThreadPool.SetMaxThreads(_workersNumber, 0);
+        ThreadPool.GetMinThreads(out _, out var IOMin);
+        ThreadPool.SetMinThreads(_workersNumber, IOMin);
         
+        ThreadPool.GetMaxThreads(out _, out var IOMax);
+        ThreadPool.SetMaxThreads(_workersNumber, IOMax);
+
         ParallelTaskMergeSort(array, 0, array.Length - 1);
     }
     
