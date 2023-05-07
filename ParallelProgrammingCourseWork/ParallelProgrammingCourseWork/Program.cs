@@ -3,19 +3,22 @@ using ParallelProgrammingCourseWork;
 
 double RunParallelAlgo()
 {
-    int[] array = ArrayGenerator.GenerateRandomArray(100000);
+    int[] array = ArrayGenerator.GenerateRandomArray(10000000);
     //Console.WriteLine("Initial array");
     //ArrayPrinter.PrintArray(array);
 
     var startTime = Stopwatch.GetTimestamp();
 
     //var sorter = new SequentialMergeSorter();
-    var sorter = new ParallelInvokeMergeSorter(8);
-    //var sorter = new ParallelTaskMergeSorter(8);
+    //var sorter = new ParallelInvokeMergeSorter(8);
+    var sorter = new ParallelTaskMergeSorter(8);
     sorter.Sort(array);
 
     var endTime = Stopwatch.GetElapsedTime(startTime);
     //Console.WriteLine(endTime.TotalSeconds);
+    
+    if (!ArrayValidator.ArrayIsSorted(array))
+        Console.WriteLine("Array is not sorted correctly");
 
     return endTime.TotalSeconds;
 
