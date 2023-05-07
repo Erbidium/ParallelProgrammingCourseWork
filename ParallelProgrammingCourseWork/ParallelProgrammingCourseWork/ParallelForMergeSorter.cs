@@ -2,12 +2,19 @@
 
 public class ParallelForMergeSorter : ISorter
 {
+    private int _workersNumber;
+    
+    public ParallelForMergeSorter(int workersNumber)
+    {
+        _workersNumber = workersNumber;
+    }
+    
     public void Sort(int[] array)
     {
         ParallelForMergeSort(array, 0, array.Length - 1);
     }
     
-    private static void ParallelForMergeSort(int[] array, int leftIndex, int rightIndex)
+    private void ParallelForMergeSort(int[] array, int leftIndex, int rightIndex)
     {
         if (leftIndex >= rightIndex) return;
         
@@ -16,7 +23,7 @@ public class ParallelForMergeSorter : ISorter
         var leftIndices = new [] { leftIndex, middlePoint + 1 };
         var rightIndices = new[] { middlePoint + 1, rightIndex };
 
-        Parallel.For(0, 2, index =>
+        Parallel.For(0, 2, new ParallelOptions { MaxDegreeOfParallelism = _workersNumber }, index =>
         {
             if (rightIndices[index] - leftIndices[index] > 4000)
             {

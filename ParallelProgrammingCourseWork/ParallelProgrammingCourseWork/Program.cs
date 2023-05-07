@@ -9,8 +9,8 @@ int[] array = ArrayGenerator.GenerateRandomArray(100000);
 var startTime = Stopwatch.GetTimestamp();
 
 //var sorter = new SequentialMergeSorter();
-//var sorter = new ParallelForMergeSorter();
-var sorter = new ParallelTaskMergeSorter();
+var sorter = new ParallelForMergeSorter(8);
+//var sorter = new ParallelTaskMergeSorter(1);
 sorter.Sort(array);
 
 var endTime = Stopwatch.GetElapsedTime(startTime);
