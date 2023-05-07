@@ -26,7 +26,7 @@ public class ParallelTaskMergeSorter : ISorter
         
         var middlePoint = (leftIndex + rightIndex) / 2;
             
-        var task1 = Task.Run(async () =>
+        var task = Task.Run(async () =>
         {
             if (middlePoint - leftIndex > 4000)
             {
@@ -37,20 +37,17 @@ public class ParallelTaskMergeSorter : ISorter
                 SequentialMergeSorter.MergeSort(array, leftIndex, middlePoint);
             }
         });
-        var task2 = Task.Run(async () =>
+        
+        if (rightIndex - middlePoint - 1 > 4000)
         {
-            if (rightIndex - middlePoint - 1 > 4000)
-            {
-                await ParallelTaskMergeSort(array, middlePoint + 1, rightIndex);
-            }
-            else
-            {
-                SequentialMergeSorter.MergeSort(array, middlePoint + 1, rightIndex);
-            }
-            
-        });
+            await ParallelTaskMergeSort(array, middlePoint + 1, rightIndex);
+        }
+        else
+        {
+            SequentialMergeSorter.MergeSort(array, middlePoint + 1, rightIndex);
+        }
 
-        await Task.WhenAll(task1, task2);
+        await task;
 
         SequentialMergeSorter.Merge(array, leftIndex, middlePoint, rightIndex);
     }
