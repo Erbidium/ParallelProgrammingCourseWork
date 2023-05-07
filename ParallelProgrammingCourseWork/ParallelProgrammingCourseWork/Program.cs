@@ -1,13 +1,18 @@
-﻿using ParallelProgrammingCourseWork;
+﻿using System.Diagnostics;
+using ParallelProgrammingCourseWork;
 
-int[] array = ArrayGenerator.GenerateRandomArray(100);
+int[] array = ArrayGenerator.GenerateRandomArray(10000);
 
-Console.WriteLine("Initial array");
-ArrayPrinter.PrintArray(array);
+//Console.WriteLine("Initial array");
+//ArrayPrinter.PrintArray(array);
 
+var startTime = Stopwatch.GetTimestamp();
 
 var sorter = new SequentialMergeSorter();
 sorter.Sort(array);
 
-Console.WriteLine("Sorted array");
-ArrayPrinter.PrintArray(array);
+var endTime = Stopwatch.GetElapsedTime(startTime);
+Console.WriteLine(endTime.TotalSeconds);
+
+//Console.WriteLine("Sorted array");
+//ArrayPrinter.PrintArray(array);
