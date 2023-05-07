@@ -5,6 +5,8 @@ public class SequentialMergeSorter : ISorter
     public void Sort(int[] array)
     {
         MergeSort(array, 0, array.Length - 1);
+        //ParallelTaskMergeSort(array, 0, array.Length - 1);
+        //ParallelForMergeSort(array, 0, array.Length - 1);
     }
     
     private static void MergeSort(int[] array, int leftIndex, int rightIndex)
@@ -15,6 +17,65 @@ public class SequentialMergeSorter : ISorter
             
         MergeSort(array, leftIndex, middlePoint);
         MergeSort(array, middlePoint + 1, rightIndex);
+
+        Merge(array, leftIndex, middlePoint, rightIndex);
+    }
+    
+    private static void ParallelTaskMergeSort(int[] array, int leftIndex, int rightIndex)
+    {
+        if (leftIndex >= rightIndex) return;
+        
+        var middlePoint = (leftIndex + rightIndex) / 2;
+            
+        var task1 = Task.Run(() =>
+        {
+            if (middlePoint - leftIndex > 4000)
+            {
+                ParallelTaskMergeSort(array, leftIndex, middlePoint);
+            }
+            else
+            {
+                MergeSort(array, leftIndex, middlePoint);
+            }
+        });
+        var task2 = Task.Run(() =>
+        {
+            if (rightIndex - middlePoint - 1 > 4000)
+            {
+                ParallelTaskMergeSort(array, middlePoint + 1, rightIndex);
+            }
+            else
+            {
+                MergeSort(array, middlePoint + 1, rightIndex);
+            }
+            
+        });
+
+        Task.WaitAll(task1, task2);
+
+        Merge(array, leftIndex, middlePoint, rightIndex);
+    }
+    
+    private static void ParallelForMergeSort(int[] array, int leftIndex, int rightIndex)
+    {
+        if (leftIndex >= rightIndex) return;
+        
+        var middlePoint = (leftIndex + rightIndex) / 2;
+
+        var leftIndices = new [] { leftIndex, middlePoint + 1 };
+        var rightIndices = new[] { middlePoint + 1, rightIndex };
+
+        Parallel.For(0, 2, index =>
+        {
+            if (rightIndices[index] - leftIndices[index] > 4000)
+            {
+                ParallelForMergeSort(array, leftIndices[index], rightIndices[index]);
+            }
+            else
+            {
+                MergeSort(array, middlePoint + 1, rightIndex);
+            }
+        });
 
         Merge(array, leftIndex, middlePoint, rightIndex);
     }

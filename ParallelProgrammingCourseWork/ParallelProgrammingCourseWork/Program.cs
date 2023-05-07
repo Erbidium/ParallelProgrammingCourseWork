@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using ParallelProgrammingCourseWork;
 
-int[] array = ArrayGenerator.GenerateRandomArray(10000);
+int[] array = ArrayGenerator.GenerateRandomArray(100000);
 
 //Console.WriteLine("Initial array");
 //ArrayPrinter.PrintArray(array);
