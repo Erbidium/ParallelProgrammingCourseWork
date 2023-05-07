@@ -10,8 +10,8 @@ double RunParallelAlgo()
     var startTime = Stopwatch.GetTimestamp();
 
     //var sorter = new SequentialMergeSorter();
-    //var sorter = new ParallelInvokeMergeSorter(8);
-    var sorter = new ParallelTaskMergeSorter(8);
+    var sorter = new ParallelInvokeMergeSorter(8);
+    //var sorter = new ParallelTaskMergeSorter(8);
     sorter.Sort(array);
 
     var endTime = Stopwatch.GetElapsedTime(startTime);

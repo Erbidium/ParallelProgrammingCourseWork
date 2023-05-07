@@ -4,17 +4,25 @@ public class ParallelInvokeMergeSorter : ISorter
 {
     private int _workersNumber;
     
+    private int _recursionDepth;
+    
     public ParallelInvokeMergeSorter(int workersNumber)
     {
         _workersNumber = workersNumber;
+        int left = workersNumber;
+        while (left > 1)
+        {
+            left /= 2;
+            _recursionDepth++;
+        }
     }
     
     public void Sort(int[] array)
     {
-        ParallelForMergeSort(array, 0, array.Length - 1);
+        ParallelForMergeSort(array, 0, array.Length - 1, 1);
     }
     
-    private void ParallelForMergeSort(int[] array, int leftIndex, int rightIndex)
+    private void ParallelForMergeSort(int[] array, int leftIndex, int rightIndex, int recursionDepth)
     {
         if (leftIndex >= rightIndex) return;
         
@@ -22,9 +30,9 @@ public class ParallelInvokeMergeSorter : ISorter
 
         void Action1()
         {
-            if (middlePoint - leftIndex > 4000)
+            if (recursionDepth < _recursionDepth)
             {
-                ParallelForMergeSort(array, leftIndex, middlePoint);
+                ParallelForMergeSort(array, leftIndex, middlePoint, recursionDepth + 1);
             }
             else
             {
@@ -36,7 +44,7 @@ public class ParallelInvokeMergeSorter : ISorter
         {
             if (rightIndex - middlePoint - 1 > 4000)
             {
-                ParallelForMergeSort(array, middlePoint + 1, rightIndex);
+                ParallelForMergeSort(array, middlePoint + 1, rightIndex, recursionDepth + 1);
             }
             else
             {
