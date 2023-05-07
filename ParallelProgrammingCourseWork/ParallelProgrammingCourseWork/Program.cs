@@ -1,6 +1,6 @@
 ﻿using ParallelProgrammingCourseWork;
 
-int[] array = { 9, 8, 5, 1, 2, 3, 1 ,56, 8, 90 };
+int[] array = ArrayGenerator.GenerateRandomArray(100);
 
 Console.WriteLine("Initial array");
 ArrayPrinter.PrintArray(array);
