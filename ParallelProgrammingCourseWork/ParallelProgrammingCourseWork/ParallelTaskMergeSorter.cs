@@ -4,9 +4,12 @@ public class ParallelTaskMergeSorter : ISorter
 {
     private int _workersNumber;
 
+    private int _recursionDepth;
+
     public ParallelTaskMergeSorter(int workersNumber)
     {
         _workersNumber = workersNumber;
+        _recursionDepth = workersNumber / 2;
     }
     
     public void Sort(int[] array)
@@ -17,10 +20,10 @@ public class ParallelTaskMergeSorter : ISorter
         ThreadPool.GetMaxThreads(out _, out var IOMax);
         ThreadPool.SetMaxThreads(_workersNumber, IOMax);
 
-        ParallelTaskMergeSort(array, 0, array.Length - 1).Wait();
+        ParallelTaskMergeSort(array, 0, array.Length - 1, 1).Wait();
     }
     
-    private static async Task ParallelTaskMergeSort(int[] array, int leftIndex, int rightIndex)
+    private async Task ParallelTaskMergeSort(int[] array, int leftIndex, int rightIndex, int recursionDepth)
     {
         if (leftIndex >= rightIndex) return;
         
@@ -28,9 +31,9 @@ public class ParallelTaskMergeSorter : ISorter
             
         var task = Task.Run(async () =>
         {
-            if (middlePoint - leftIndex > 4000)
+            if (recursionDepth < _recursionDepth)
             {
-                await ParallelTaskMergeSort(array, leftIndex, middlePoint);
+                await ParallelTaskMergeSort(array, leftIndex, middlePoint, recursionDepth + 1);
             }
             else
             {
@@ -38,9 +41,9 @@ public class ParallelTaskMergeSorter : ISorter
             }
         });
         
-        if (rightIndex - middlePoint - 1 > 4000)
+        if (recursionDepth < _recursionDepth)
         {
-            await ParallelTaskMergeSort(array, middlePoint + 1, rightIndex);
+            await ParallelTaskMergeSort(array, middlePoint + 1, rightIndex, recursionDepth + 1);
         }
         else
         {
