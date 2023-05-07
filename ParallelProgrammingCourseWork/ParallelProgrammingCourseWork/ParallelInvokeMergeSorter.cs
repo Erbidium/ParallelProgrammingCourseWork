@@ -11,10 +11,10 @@ public class ParallelInvokeMergeSorter : ISorter
     
     public void Sort(int[] array)
     {
-        ParallelForMergeSort(array, 0, array.Length - 1);
+        ParallelForMergeSort(array, 0, array.Length - 1).Wait();
     }
     
-    private void ParallelForMergeSort(int[] array, int leftIndex, int rightIndex)
+    private async Task ParallelForMergeSort(int[] array, int leftIndex, int rightIndex)
     {
         if (leftIndex >= rightIndex) return;
         
@@ -44,13 +44,15 @@ public class ParallelInvokeMergeSorter : ISorter
             }
         };
         
-        Parallel.Invoke
+        var task = Task.Run(() => Parallel.Invoke
         (
             new ParallelOptions { MaxDegreeOfParallelism = _workersNumber},
             action1,
             action2
-        );
+        ));
 
+        await task;
+        
         SequentialMergeSorter.Merge(array, leftIndex, middlePoint, rightIndex);
     }
 }
