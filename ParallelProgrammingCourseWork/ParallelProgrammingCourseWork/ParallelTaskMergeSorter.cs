@@ -9,7 +9,12 @@ public class ParallelTaskMergeSorter : ISorter
     public ParallelTaskMergeSorter(int workersNumber)
     {
         _workersNumber = workersNumber;
-        _recursionDepth = workersNumber / 2;
+        int left = workersNumber;
+        while (left > 1)
+        {
+            left /= 2;
+            _recursionDepth++;
+        }
     }
     
     public void Sort(int[] array)
