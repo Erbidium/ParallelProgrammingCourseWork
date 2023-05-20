@@ -2,11 +2,13 @@
 using ParallelProgrammingCourseWork.ArrayHelpers;
 using ParallelProgrammingCourseWork.Interfaces;
 
-namespace ParallelProgrammingCourseWork.SorterBenchmark;
+namespace ParallelProgrammingCourseWork.SorterBenchmark.Abstractions;
 
-public class SorterBenchmark
+public abstract class SorterBenchmark
 {
-    public void Run(ISorter sorter, int executionTimesCount, int[] array)
+    public abstract void Run();
+
+    protected static void Run(ISorter sorter, int executionTimesCount, int[] array)
     {
         for (int i = 0; i < executionTimesCount; i++)
         {
