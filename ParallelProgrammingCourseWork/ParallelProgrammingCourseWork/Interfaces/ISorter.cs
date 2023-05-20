@@ -1,4 +1,4 @@
-﻿namespace ParallelProgrammingCourseWork;
+﻿namespace ParallelProgrammingCourseWork.Interfaces;
 
 public interface ISorter
 {
