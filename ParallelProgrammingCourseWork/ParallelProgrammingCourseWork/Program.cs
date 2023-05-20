@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using ParallelProgrammingCourseWork;
+using ParallelProgrammingCourseWork.ArrayHelpers;
+using ParallelProgrammingCourseWork.Sorters;
 
 double RunParallelAlgo()
 {
-    int[] array = ArrayGenerator.GenerateRandomArray(10000000);
+    int[] array = ArrayGenerator.GenerateRandomArray(1000000);
     //Console.WriteLine("Initial array");
     //ArrayPrinter.PrintArray(array);
 

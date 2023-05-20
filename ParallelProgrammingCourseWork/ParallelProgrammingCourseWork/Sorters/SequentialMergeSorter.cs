@@ -1,6 +1,6 @@
 ﻿using ParallelProgrammingCourseWork.Interfaces;
 
-namespace ParallelProgrammingCourseWork;
+namespace ParallelProgrammingCourseWork.Sorters;
 
 public class SequentialMergeSorter : ISorter
 {
