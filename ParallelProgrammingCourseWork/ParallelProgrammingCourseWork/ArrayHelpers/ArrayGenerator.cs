@@ -1,4 +1,4 @@
-﻿namespace ParallelProgrammingCourseWork;
+﻿namespace ParallelProgrammingCourseWork.ArrayHelpers;
 
 public static class ArrayGenerator
 {

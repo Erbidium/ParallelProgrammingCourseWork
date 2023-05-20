@@ -1,4 +1,6 @@
-﻿namespace ParallelProgrammingCourseWork;
+﻿using ParallelProgrammingCourseWork.Interfaces;
+
+namespace ParallelProgrammingCourseWork;
 
 public class ParallelInvokeMergeSorter : ISorter
 {
