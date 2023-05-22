@@ -8,8 +8,10 @@ public abstract class SorterBenchmark
 {
     public abstract void Run();
 
-    protected static void Run(ISorter sorter, int executionTimesCount, int[] array)
+    protected static double Run(ISorter sorter, int executionTimesCount, int[] array)
     {
+        double millisecondsSum = 0;
+        
         for (int i = 0; i < executionTimesCount; i++)
         {
             var arrayCopyToSort = array[..];
@@ -18,16 +20,19 @@ public abstract class SorterBenchmark
             
             sorter.Sort(arrayCopyToSort);
 
-            var endTime = Stopwatch.GetElapsedTime(startTime);
-            Console.WriteLine(endTime.TotalSeconds);
+            var executionTime = Stopwatch.GetElapsedTime(startTime);
+
+            millisecondsSum += executionTime.TotalMilliseconds;
     
             if (!ArrayValidator.ArrayIsSorted(arrayCopyToSort))
                 Console.WriteLine("Array is not sorted correctly");
             
-            Console.WriteLine(endTime.TotalMilliseconds);
+            Console.WriteLine($"Attempt {i + 1}, time: {executionTime.TotalMilliseconds}");
             
             //Console.WriteLine("Sorted array");
-            ArrayPrinter.PrintArray(arrayCopyToSort);
+            //ArrayPrinter.PrintArray(arrayCopyToSort);
         }
+
+        return millisecondsSum / executionTimesCount;
     }
 }

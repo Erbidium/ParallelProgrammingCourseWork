@@ -3,7 +3,7 @@ using ParallelProgrammingCourseWork.Interfaces;
 
 namespace ParallelProgrammingCourseWork.SorterBenchmark.Abstractions;
 
-public abstract class ParallelSorterBenchmark : Abstractions.SorterBenchmark
+public abstract class ParallelSorterBenchmark : SorterBenchmark
 {
     private readonly int _executionTimesCount;
     
@@ -28,14 +28,17 @@ public abstract class ParallelSorterBenchmark : Abstractions.SorterBenchmark
     public override void Run()
     {
         var array = ArrayGenerator.GenerateRandomArray(_randomArraySize);
-        Console.WriteLine("Initial array");
-        ArrayPrinter.PrintArray(array);
+        //Console.WriteLine("Initial array");
+        //ArrayPrinter.PrintArray(array);
         
 
         foreach (var workersNumber in _workersNumberForTesting)
         {
             var sorter = ParallelSorterFactory.CreateParallelSorter(workersNumber);
-            Run(sorter, _executionTimesCount, array);
+
+            var averageExecutionTime = Run(sorter, _executionTimesCount, array);
+        
+            Console.WriteLine($"Average execution time: {averageExecutionTime} with {workersNumber} workers");
         }
     }
 }

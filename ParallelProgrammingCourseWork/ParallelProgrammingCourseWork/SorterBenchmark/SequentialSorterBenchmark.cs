@@ -18,10 +18,12 @@ public class SequentialSorterBenchmark : Abstractions.SorterBenchmark
     public override void Run()
     {
         var array = ArrayGenerator.GenerateRandomArray(_randomArraySize);
-        Console.WriteLine("Initial array");
-        ArrayPrinter.PrintArray(array);
+        //Console.WriteLine("Initial array");
+        //ArrayPrinter.PrintArray(array);
         
         var sorter = new SequentialMergeSorter();
-        Run(sorter, _executionTimesCount, array);
+        var averageExecutionTime = Run(sorter, _executionTimesCount, array);
+        
+        Console.WriteLine($"Average execution time: {averageExecutionTime}");
     }
 }

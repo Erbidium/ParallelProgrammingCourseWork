@@ -1,5 +1,7 @@
 ﻿using ParallelProgrammingCourseWork.SorterBenchmark;
+using ParallelProgrammingCourseWork.SorterBenchmark.Abstractions;
 
-var sequentialSorterBenchmark = new SequentialSorterBenchmark(3, 10);
-sequentialSorterBenchmark.Run();
+SorterBenchmark sorterBenchmark = new ParallelInvokeSorterBenchmark(3, 1000, 2, 4, 8);
+sorterBenchmark.Run();
+sorterBenchmark.Run();
 
