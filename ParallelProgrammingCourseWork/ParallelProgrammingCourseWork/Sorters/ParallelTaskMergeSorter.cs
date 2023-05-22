@@ -1,16 +1,14 @@
-﻿using ParallelProgrammingCourseWork.Interfaces;
+﻿using ParallelProgrammingCourseWork.Abstractions;
 
 namespace ParallelProgrammingCourseWork.Sorters;
 
-public class ParallelTaskMergeSorter : ISorter
+public class ParallelTaskMergeSorter : ParallelSorter
 {
-    private int _workersNumber;
-
-    private int _recursionDepth;
+    private readonly int _recursionDepth;
 
     public ParallelTaskMergeSorter(int workersNumber)
+    : base(workersNumber)
     {
-        _workersNumber = workersNumber;
         int left = workersNumber;
         while (left > 1)
         {
@@ -19,13 +17,13 @@ public class ParallelTaskMergeSorter : ISorter
         }
     }
     
-    public void Sort(int[] array)
+    public override void Sort(int[] array)
     {
         ThreadPool.GetMinThreads(out _, out var IOMin);
-        ThreadPool.SetMinThreads(_workersNumber, IOMin);
+        ThreadPool.SetMinThreads(WorkersNumber, IOMin);
         
         ThreadPool.GetMaxThreads(out _, out var IOMax);
-        ThreadPool.SetMaxThreads(_workersNumber, IOMax);
+        ThreadPool.SetMaxThreads(WorkersNumber, IOMax);
 
         ParallelTaskMergeSort(array, 0, array.Length - 1, 1).Wait();
     }

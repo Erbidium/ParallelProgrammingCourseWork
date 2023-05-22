@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
+using ParallelProgrammingCourseWork.Abstractions;
 using ParallelProgrammingCourseWork.ArrayHelpers;
-using ParallelProgrammingCourseWork.Interfaces;
 
 namespace ParallelProgrammingCourseWork.SorterBenchmark.Abstractions;
 

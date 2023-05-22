@@ -1,4 +1,4 @@
-﻿using ParallelProgrammingCourseWork.Interfaces;
+﻿using ParallelProgrammingCourseWork.Abstractions;
 
 namespace ParallelProgrammingCourseWork.Sorters;
 

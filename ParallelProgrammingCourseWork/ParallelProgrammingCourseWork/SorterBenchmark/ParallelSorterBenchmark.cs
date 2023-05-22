@@ -1,9 +1,9 @@
-﻿using ParallelProgrammingCourseWork.ArrayHelpers;
-using ParallelProgrammingCourseWork.Interfaces;
+﻿using ParallelProgrammingCourseWork.Abstractions;
+using ParallelProgrammingCourseWork.ArrayHelpers;
 
-namespace ParallelProgrammingCourseWork.SorterBenchmark.Abstractions;
+namespace ParallelProgrammingCourseWork.SorterBenchmark;
 
-public abstract class ParallelSorterBenchmark : SorterBenchmark
+public class ParallelSorterBenchmark<T> : Abstractions.SorterBenchmark where T : ParallelSorter
 {
     private readonly int _executionTimesCount;
     
@@ -11,9 +11,7 @@ public abstract class ParallelSorterBenchmark : SorterBenchmark
 
     private readonly int[] _workersNumberForTesting;
 
-    protected abstract IParallelSorterFactory ParallelSorterFactory { get; }
-
-    protected ParallelSorterBenchmark
+    public ParallelSorterBenchmark
     (
         int executionTimesCount,
         int randomArraySize,
@@ -34,7 +32,7 @@ public abstract class ParallelSorterBenchmark : SorterBenchmark
 
         foreach (var workersNumber in _workersNumberForTesting)
         {
-            var sorter = ParallelSorterFactory.CreateParallelSorter(workersNumber);
+            var sorter = (T)Activator.CreateInstance(typeof(T), workersNumber)!;
 
             var averageExecutionTime = Run(sorter, _executionTimesCount, array);
         

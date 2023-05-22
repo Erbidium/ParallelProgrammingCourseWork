@@ -1,16 +1,14 @@
-﻿using ParallelProgrammingCourseWork.Interfaces;
+﻿using ParallelProgrammingCourseWork.Abstractions;
 
 namespace ParallelProgrammingCourseWork.Sorters;
 
-public class ParallelInvokeMergeSorter : ISorter
+public class ParallelInvokeMergeSorter : ParallelSorter
 {
-    private int _workersNumber;
-    
     private int _recursionDepth;
     
-    public ParallelInvokeMergeSorter(int workersNumber)
+    public ParallelInvokeMergeSorter(int workersNumber) 
+        : base(workersNumber)
     {
-        _workersNumber = workersNumber;
         int left = workersNumber;
         while (left > 1)
         {
@@ -19,7 +17,7 @@ public class ParallelInvokeMergeSorter : ISorter
         }
     }
     
-    public void Sort(int[] array)
+    public override void Sort(int[] array)
     {
         ParallelForMergeSort(array, 0, array.Length - 1, 1);
     }
@@ -56,7 +54,7 @@ public class ParallelInvokeMergeSorter : ISorter
 
         Parallel.Invoke
         (
-            new ParallelOptions { MaxDegreeOfParallelism = _workersNumber },
+            new ParallelOptions { MaxDegreeOfParallelism = WorkersNumber },
             Action1,
             Action2
         );
