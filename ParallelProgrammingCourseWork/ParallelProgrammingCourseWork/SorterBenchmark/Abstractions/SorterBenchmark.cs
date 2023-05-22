@@ -14,6 +14,10 @@ public abstract class SorterBenchmark
         
         for (int i = 0; i < executionTimesCount; i++)
         {
+            //test run
+            var testArrayCopyToSort = array[..];
+            sorter.Sort(testArrayCopyToSort);
+            
             var arrayCopyToSort = array[..];
             
             var startTime = Stopwatch.GetTimestamp();
