@@ -9,12 +9,7 @@ public class ParallelInvokeMergeSorter : ParallelSorter
     public ParallelInvokeMergeSorter(int workersNumber) 
         : base(workersNumber)
     {
-        int left = workersNumber;
-        while (left > 1)
-        {
-            left /= 2;
-            _recursionDepth++;
-        }
+        _recursionDepth = (int)Math.Log2(workersNumber);
     }
     
     public override void Sort(int[] array)
