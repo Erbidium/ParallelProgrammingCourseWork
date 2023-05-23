@@ -1,8 +1,10 @@
-﻿namespace ParallelProgrammingCourseWork.ArrayHelpers;
+﻿using ParallelProgrammingCourseWork.Abstractions;
 
-public static class ArrayGenerator
+namespace ParallelProgrammingCourseWork.ArrayGenerators;
+
+public class IntegerArrayGenerator : IArrayGenerator<int>
 {
-    public static int[] GenerateRandomArray(int size)
+    public int[] GenerateArray(int size)
     {
         var array = new int[size];
 

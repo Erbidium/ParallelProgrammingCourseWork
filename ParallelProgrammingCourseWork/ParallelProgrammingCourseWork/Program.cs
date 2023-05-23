@@ -1,13 +1,18 @@
+using ParallelProgrammingCourseWork.ArrayGenerators;
 using ParallelProgrammingCourseWork.SorterBenchmark;
 using ParallelProgrammingCourseWork.Sorters;
 
-//var sequentialMergeSorterBenchmark = new SequentialSorterBenchmark(3, 10000);
-//sequentialMergeSorterBenchmark.Run();
+var sequentialMergeSorterBenchmark = new SequentialSorterBenchmark<int>(3, 50_000, new IntegerArrayGenerator());
+sequentialMergeSorterBenchmark.Run();
 
 
-var parallelInvokeSorterBenchmark = new ParallelSorterBenchmark<ParallelInvokeMergeSorter>(3, 1000000, 2, 4, 8);
+var parallelInvokeSorterBenchmark = new ParallelSorterBenchmark<ParallelInvokeMergeSorter<int>, int>
+(3, 50_000,  new IntegerArrayGenerator(), 2, 4, 8);
+
 parallelInvokeSorterBenchmark.Run();
 
-var parallelTaskSorterBenchmark = new ParallelSorterBenchmark<ParallelTaskMergeSorter>(3, 1000000, 2, 4, 8);
+var parallelTaskSorterBenchmark = new ParallelSorterBenchmark<ParallelTaskMergeSorter<int>, int>
+(3, 50_000, new IntegerArrayGenerator(), 2, 4, 8);
+
 parallelTaskSorterBenchmark.Run();
 

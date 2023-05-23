@@ -3,7 +3,9 @@ using ParallelProgrammingCourseWork.ArrayHelpers;
 
 namespace ParallelProgrammingCourseWork.SorterBenchmark;
 
-public class ParallelSorterBenchmark<T> : Abstractions.SorterBenchmark where T : ParallelSorter<int>
+public class ParallelSorterBenchmark<TParallelSorter, TSortedType> : Abstractions.SorterBenchmark<TSortedType>
+    where TParallelSorter : ParallelSorter<TSortedType>
+    where TSortedType : IComparable<TSortedType>
 {
     private readonly int _executionTimesCount;
     
@@ -11,13 +13,17 @@ public class ParallelSorterBenchmark<T> : Abstractions.SorterBenchmark where T :
 
     private readonly int[] _workersNumberForTesting;
 
+    private IArrayGenerator<TSortedType> _arrayGenerator;
+
     public ParallelSorterBenchmark
     (
         int executionTimesCount,
         int randomArraySize,
+        IArrayGenerator<TSortedType> arrayGenerator,
         params int[] workersNumberForTesting
     )
     {
+        _arrayGenerator = arrayGenerator;
         _executionTimesCount = executionTimesCount;
         _randomArraySize = randomArraySize;
         _workersNumberForTesting = workersNumberForTesting;
@@ -25,14 +31,14 @@ public class ParallelSorterBenchmark<T> : Abstractions.SorterBenchmark where T :
     
     public override void Run()
     {
-        var array = ArrayGenerator.GenerateRandomArray(_randomArraySize);
+        var array = _arrayGenerator.GenerateArray(_randomArraySize);
         //Console.WriteLine("Initial array");
         //ArrayPrinter.PrintArray(array);
         
 
         foreach (var workersNumber in _workersNumberForTesting)
         {
-            var sorter = (T)Activator.CreateInstance(typeof(T), workersNumber)!;
+            var sorter = (TParallelSorter)Activator.CreateInstance(typeof(TParallelSorter), workersNumber)!;
 
             var averageExecutionTime = Run(sorter, _executionTimesCount, array);
         
