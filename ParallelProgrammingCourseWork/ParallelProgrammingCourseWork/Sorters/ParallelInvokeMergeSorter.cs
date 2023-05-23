@@ -14,10 +14,10 @@ public class ParallelInvokeMergeSorter<T> : ParallelSorter<T> where T : ICompara
     
     public override void Sort(T[] array)
     {
-        ParallelForMergeSort(array, 0, array.Length - 1, 1);
+        ParallelInvokeMergeSort(array, 0, array.Length - 1, 1);
     }
     
-    private void ParallelForMergeSort(T[] array, int leftIndex, int rightIndex, int recursionDepth)
+    private void ParallelInvokeMergeSort(T[] array, int leftIndex, int rightIndex, int recursionDepth)
     {
         if (leftIndex >= rightIndex) return;
         
@@ -27,7 +27,7 @@ public class ParallelInvokeMergeSorter<T> : ParallelSorter<T> where T : ICompara
         {
             if (recursionDepth < _recursionDepth)
             {
-                ParallelForMergeSort(array, leftIndex, middlePoint, recursionDepth + 1);
+                ParallelInvokeMergeSort(array, leftIndex, middlePoint, recursionDepth + 1);
             }
             else
             {
@@ -39,7 +39,7 @@ public class ParallelInvokeMergeSorter<T> : ParallelSorter<T> where T : ICompara
         {
             if (rightIndex - middlePoint - 1 > 4000)
             {
-                ParallelForMergeSort(array, middlePoint + 1, rightIndex, recursionDepth + 1);
+                ParallelInvokeMergeSort(array, middlePoint + 1, rightIndex, recursionDepth + 1);
             }
             else
             {

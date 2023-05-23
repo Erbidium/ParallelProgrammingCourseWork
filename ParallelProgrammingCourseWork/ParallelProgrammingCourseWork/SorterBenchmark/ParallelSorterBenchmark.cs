@@ -1,5 +1,4 @@
 ﻿using ParallelProgrammingCourseWork.Abstractions;
-using ParallelProgrammingCourseWork.ArrayHelpers;
 
 namespace ParallelProgrammingCourseWork.SorterBenchmark;
 
