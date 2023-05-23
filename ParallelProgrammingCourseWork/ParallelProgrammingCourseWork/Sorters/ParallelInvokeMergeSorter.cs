@@ -2,7 +2,7 @@
 
 namespace ParallelProgrammingCourseWork.Sorters;
 
-public class ParallelInvokeMergeSorter : ParallelSorter
+public class ParallelInvokeMergeSorter<T> : ParallelSorter<T> where T : IComparable<T>
 {
     private int _recursionDepth;
     
@@ -12,12 +12,12 @@ public class ParallelInvokeMergeSorter : ParallelSorter
         _recursionDepth = (int)Math.Log2(workersNumber);
     }
     
-    public override void Sort(int[] array)
+    public override void Sort(T[] array)
     {
         ParallelForMergeSort(array, 0, array.Length - 1, 1);
     }
     
-    private void ParallelForMergeSort(int[] array, int leftIndex, int rightIndex, int recursionDepth)
+    private void ParallelForMergeSort(T[] array, int leftIndex, int rightIndex, int recursionDepth)
     {
         if (leftIndex >= rightIndex) return;
         
@@ -31,7 +31,7 @@ public class ParallelInvokeMergeSorter : ParallelSorter
             }
             else
             {
-                SequentialMergeSorter.MergeSort(array, leftIndex, middlePoint);
+                SequentialMergeSorter<T>.MergeSort(array, leftIndex, middlePoint);
             }
         }
 
@@ -43,7 +43,7 @@ public class ParallelInvokeMergeSorter : ParallelSorter
             }
             else
             {
-                SequentialMergeSorter.MergeSort(array, middlePoint + 1, rightIndex);
+                SequentialMergeSorter<T>.MergeSort(array, middlePoint + 1, rightIndex);
             }
         }
 
@@ -54,6 +54,6 @@ public class ParallelInvokeMergeSorter : ParallelSorter
             Action2
         );
 
-        SequentialMergeSorter.Merge(array, leftIndex, middlePoint, rightIndex);
+        SequentialMergeSorter<T>.Merge(array, leftIndex, middlePoint, rightIndex);
     }
 }

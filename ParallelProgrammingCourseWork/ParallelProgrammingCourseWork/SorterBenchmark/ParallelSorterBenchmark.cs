@@ -3,7 +3,7 @@ using ParallelProgrammingCourseWork.ArrayHelpers;
 
 namespace ParallelProgrammingCourseWork.SorterBenchmark;
 
-public class ParallelSorterBenchmark<T> : Abstractions.SorterBenchmark where T : ParallelSorter
+public class ParallelSorterBenchmark<T> : Abstractions.SorterBenchmark where T : ParallelSorter<int>
 {
     private readonly int _executionTimesCount;
     

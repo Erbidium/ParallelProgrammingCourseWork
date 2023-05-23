@@ -21,7 +21,7 @@ public class SequentialSorterBenchmark : Abstractions.SorterBenchmark
         //Console.WriteLine("Initial array");
         //ArrayPrinter.PrintArray(array);
         
-        var sorter = new SequentialMergeSorter();
+        var sorter = new SequentialMergeSorter<int>();
         var averageExecutionTime = Run(sorter, _executionTimesCount, array);
         
         Console.WriteLine($"Average execution time: {averageExecutionTime}");

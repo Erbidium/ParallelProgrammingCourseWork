@@ -8,7 +8,7 @@ public abstract class SorterBenchmark
 {
     public abstract void Run();
 
-    protected static double Run(ISorter sorter, int executionTimesCount, int[] array)
+    protected static double Run(ISorter<int> sorter, int executionTimesCount, int[] array)
     {
         double millisecondsSum = 0;
         

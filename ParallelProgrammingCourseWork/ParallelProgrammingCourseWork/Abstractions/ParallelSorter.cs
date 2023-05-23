@@ -1,6 +1,6 @@
 ﻿namespace ParallelProgrammingCourseWork.Abstractions;
 
-public abstract class ParallelSorter : ISorter
+public abstract class ParallelSorter<T> : ISorter<T> where T : IComparable<T>
 {
     protected readonly int WorkersNumber;
 
@@ -10,6 +10,6 @@ public abstract class ParallelSorter : ISorter
     }
         
     
-    public abstract void Sort(int[] array);
+    public abstract void Sort(T[] array);
 
 }

@@ -1,6 +1,6 @@
 ﻿namespace ParallelProgrammingCourseWork.Abstractions;
 
-public interface ISorter
+public interface ISorter<in T> where T : IComparable<T>
 {
-    void Sort(int[] array);
+    void Sort(T[] array);
 }
