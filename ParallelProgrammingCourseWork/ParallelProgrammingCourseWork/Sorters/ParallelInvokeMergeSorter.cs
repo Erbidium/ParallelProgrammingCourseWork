@@ -37,7 +37,7 @@ public class ParallelInvokeMergeSorter<T> : ParallelSorter<T> where T : ICompara
 
         void Action2()
         {
-            if (rightIndex - middlePoint - 1 > 4000)
+            if (recursionDepth < _recursionDepth)
             {
                 ParallelInvokeMergeSort(array, middlePoint + 1, rightIndex, recursionDepth + 1);
             }
